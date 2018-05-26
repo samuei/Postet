@@ -1,0 +1,29 @@
+
+
+div.noteBox {
+	background-color: #EEE8AA;
+	padding: 10px;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 10pt;
+	color: #2F4F4F;
+	text-align: center;
+	float: left;
+	width: 30%;
+	margin: 1px;
+}
+
+@media only screen and (max-width:1240px) {
+  /* For mobile phones (or resized windows, wink wink): */
+  .noteBox
+	{
+		width: 45%;
+	}
+}
+
+@media only screen and (max-width:620px) {
+  /* For mobile phones (or resized windows, wink wink): */
+  .noteBox
+	{
+		width: 100%;
+	}
+}
