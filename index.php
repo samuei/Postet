@@ -10,21 +10,14 @@
 
 <?php
 
-require('NoteTemplate.php');
+// External files
 require('config.php');
+require('NoteTemplate.php');
 
-/*
-CREATE TABLE `notes` (
-  `note_id` INT NOT NULL AUTO_INCREMENT,
-  `short_name` VARCHAR(50),
-  `long_desc` TEXT,
-  `creator_name` VARCHAR(20),
-  PRIMARY KEY  (`note_id`)
-);
-*/
-
+// Gather info from db
 $res = $mysqli->query('SELECT note_id, short_name, long_desc, creator_name FROM notes');
 
+// Arrange notes
 while($result = $res->fetch_assoc()) {
     echo NoteTemplate($result);
 }
