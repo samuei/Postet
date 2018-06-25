@@ -11,8 +11,15 @@
 <?php
 
 // External files
-require('config.php');
+require_once('config.php');
 require('NoteTemplate.php');
+
+?>
+
+<a href="/create.php" class="create">Create</a>
+<br>
+
+<?php
 
 // Gather info from db
 $res = $mysqli->query('SELECT note_id, short_name, long_desc, creator_name FROM notes');

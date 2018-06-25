@@ -12,6 +12,27 @@ div.noteBox {
 	margin: 1px;
 }
 
+a.create:link, a.create:visited {
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+	background-color: #EEE8AA;
+	border-bottom-right-radius: 60px 5px;
+	box-shadow: 0px 4px 6px #333;
+	-moz-box-shadow: 0px 4px 6px #333;
+	-webkit-box-shadow: 0px 4px 6px #333;
+	-webkit-border-bottom-right-radius: 60px 5px;
+	-moz-border-bottom-right-radius: 60px 5px;
+	-o-border-bottom-right-radius: 60px 5px;
+}
+
+
+a.create:hover, a.create:active {
+    background-color: yellow;
+	border-bottom-right-radius: 60px 5px;
+}
+
 @media only screen and (max-width:1240px) {
   /* For mobile phones (or resized windows, wink wink): */
   .noteBox
