@@ -1,52 +1,22 @@
 <?php
 
-// form handler
-function validateCreateForm($arr) {
-	extract($arr);
-	
-	if(!isset($short_name, $long_desc, $creator_name)) 
-		return;
-		
-	if(!$short_name) {
-		return "Please enter a short name";
-	} elseif(!$long_desc) {
-		return "Please enter a long description";
-	} elseif(!$creator_name) {
-		return "Please enter your name";
-	} 
-	
-	// External files
-	require_once('config.php');
-	
-	// Check connection
-	if ($mysqli->connect_error) {
-		die("Connection failed: " . $mysqli->connect_error);
-	}
-
-	// prepare and bind
-	$stmt = $mysqli->prepare("INSERT INTO notes (short_name, long_desc, creator_name) VALUES (?, ?, ?)");
-	if($stmt == false)
-		die("Secured");
-	
-	$stmt->bind_param("sss", $short_name, $long_desc, $creator_name);
-
-	$stmt->execute();
-	
-	$stmt->close();
-	
-	// redirect
-	$host = $_SERVER['HTTP_HOST'];
-	$uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-	$extra = 'index.php';
-	header("Location: http://$host$uri/$extra");
-	exit;
-
-}
-
 // execution starts here
 if(isset($_POST['create_note'])) {
-	// call form handler
-	$errorMsg = validateCreateForm($_POST);
+	
+	// External files
+	require_once('functions.php');
+	
+	// If there's a note to be created, create
+	$errorMsg = createPostetNote($_POST);
+	
+	if (!$errorMsg) {
+		// If everything went alright, redirect
+		$host = $_SERVER['HTTP_HOST'];
+		$uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+		$extra = 'index.php';
+		header("Location: http://$host$uri/$extra");
+		exit;
+	}
 }
 
 ?>
@@ -63,22 +33,22 @@ if(isset($_POST['create_note'])) {
 
 <?php
 if(isset($errorMsg) && $errorMsg) {
-	echo "<p style=\"color: red;\">*" . htmlspecialchars($errorMsg) . "</p>\n\n";
+	echo "<p style=\"color: red;\">* " . htmlspecialchars($errorMsg) . "</p>\n\n";
 }
 ?>
 
 <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-	<p><label>Short Name<strong>*</strong><br>
-		<input type="text" size="48" name="short_name" 
+	<p><label>Short Name<br>
+		<input type="text" size="48" name="short_name" required maxlength="50"
 			value="<?php if(isset($_POST['short_name'])) echo htmlspecialchars($_POST['short_name']); ?>">
 	</label></p>
-	<p><label>Long Description<strong>*</strong><br>
-		<textarea name="long_desc" cols="48" rows="8"><?php 
+	<p><label>Long Description<br>
+		<textarea name="long_desc" cols="48" rows="8" required><?php 
 			if(isset($_POST['long_desc'])) echo htmlspecialchars($_POST['long_desc']); 
 		?></textarea>
 	</label></p>
-	<p><label>Creator Name<strong>*</strong><br>
-		<input type="text" size="48" name="creator_name" 
+	<p><label>Creator Name<br>
+		<input type="text" size="48" name="creator_name" required maxlength="20"
 			value="<?php if(isset($_POST['creator_name'])) echo htmlspecialchars($_POST['creator_name']); ?>">
 	</label></p>
 	<p>

@@ -12,6 +12,10 @@ div.noteBox {
 	margin: 1px;
 }
 
+div.noteBox form {
+	display: inline;
+}
+
 a.create:link, a.create:visited {
     padding: 14px 25px;
     text-align: center;
@@ -31,6 +35,14 @@ a.create:link, a.create:visited {
 a.create:hover, a.create:active {
     background-color: yellow;
 	border-bottom-right-radius: 60px 5px;
+}
+
+input.deleteMark {
+	float: right;
+	color: #d6d09a;
+	background-color: #EEE8AA;
+	border: none;
+	text-decoration: none;
 }
 
 @media only screen and (max-width:1240px) {
