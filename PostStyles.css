@@ -37,8 +37,21 @@ a.create:hover, a.create:active {
 	border-bottom-right-radius: 60px 5px;
 }
 
+span.floatButtons {
+	direction:rtl;
+	float:right;
+}
+
+input.updateMark {
+	float: left;
+	color: #d6d09a;
+	background-color: #EEE8AA;
+	border: none;
+	text-decoration: none;
+}
+
 input.deleteMark {
-	float: right;
+	float: left;
 	color: #d6d09a;
 	background-color: #EEE8AA;
 	border: none;

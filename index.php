@@ -4,20 +4,35 @@
 require_once('functions.php');
 require('NoteTemplate.php');
 
-if (isset($_POST['note_id']) and is_numeric($_POST['note_id'])) {
-	// If there's a note to be deleted, delete
-	$errorMsg = deletePostetNote($_POST);
-	
-	if (!$errorMsg) {
-		// If everything went alright, refresh
-		$host = $_SERVER['HTTP_HOST'];
-		$uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-		$extra = 'index.php';
-		header("Location: http://$host$uri/$extra");
-		exit;
-	}
-
+$action = '';
+if (isset($_POST['delete'])) {
+	$action = 'delete';
 }
+
+switch($action) {
+	case 'delete':
+		if (isset($_POST['note_id']) and is_numeric($_POST['note_id'])) {
+			// If there's a note to be deleted, delete
+			$errorMsg = deletePostetNote($_POST);
+			
+			if (!$errorMsg) {
+				// If everything went alright, refresh
+				$host = $_SERVER['HTTP_HOST'];
+				$uri = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+				$extra = 'index.php';
+				header("Location: http://$host$uri/$extra");
+				exit;
+			}
+		}
+		break;
+
+	default:
+		// This will execute if $action is empty or invalid.
+		// Currently noop
+		break;
+}
+
+		
 
 ?> 
 

@@ -85,3 +85,47 @@ function deletePostetNote($arr) {
 	
 	return;
 }
+
+function updatePostetNote($arr) {
+	extract($arr);
+	global $mysqli;
+	
+	if(!isset($note_id, $short_name, $long_desc, $creator_name)) {
+		return "An error occurred. Please make sure you have submitted acceptable values. \n Function Error " . __LINE__;
+	}
+		
+	if(!$short_name) {
+		return "Please enter a short name";
+	} elseif(!$long_desc) {
+		return "Please enter a long description";
+	} elseif(!$creator_name) {
+		return "Please enter your name";
+	} elseif(!$note_id) {
+		return "Unable to find that note";
+	} 
+
+	// Check connection
+	if ($mysqli->connect_error) {
+		return "An error occurred. Your submission was not saved. \n " . $mysqli->connect_error;
+	}
+
+	// prepare and bind
+	$stmt = $mysqli->prepare("
+		UPDATE notes 
+		SET short_name = ?, 
+			long_desc = ?, 
+			creator_name = ?
+		WHERE note_id = ?
+	");
+	
+	if($stmt == false)
+		return "An error occurred. Your submission was not saved. \n Query Error " . __LINE__;
+	
+	$stmt->bind_param("sssi", $short_name, $long_desc, $creator_name, $note_id);
+
+	$stmt->execute();
+	
+	$stmt->close();
+	
+	return;
+}
